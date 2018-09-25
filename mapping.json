@@ -1,0 +1,46 @@
+{
+  "category": {
+    "metrication": {
+      "metric": {
+        "mm": {
+          "multiplier": 1,
+          "default": true
+        },
+        "cm": {
+          "multiplier": 0.1,
+          "default": false
+        },
+        "m": {
+          "multiplier": 0.001,
+          "default": false
+        },
+        "km": {
+          "multiplier": 1e-6,
+          "default": false
+        }
+      },
+      "angloSaxon": {
+        "in": {
+          "multiplier": 1,
+          "default": true
+        },
+        "ft": {
+          "multiplier": 0.0833333,
+          "default": false
+        },
+        "mil": {
+          "multiplier": 1.5783e-5,
+          "default": false
+        }
+      }
+    }
+  },
+  "transferCode": {
+    "mm": {
+      "in": 0.0393701
+    },
+    "in": {
+      "mm": 25.4
+    }
+  }
+}
