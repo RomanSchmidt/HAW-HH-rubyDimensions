@@ -6,90 +6,90 @@ class Input
 
   def start
     clear
-    category = getCategory
-    firstConvert = getConvertFrom(category)
-    firstDimension = getConvertDimension(category, firstConvert)
-    secondConvert = getConvertTo(category)
-    secondDimension = getConvertDimension(category, secondConvert)
-    printf("convert from (%s) to (%s)", firstDimension, secondDimension)
+    category = get_category
+    first_convert = get_convert_from(category)
+    first_dimension = get_convert_dimension(category, first_convert)
+    second_convert = get_convert_to(category)
+    second_dimension = get_convert_dimension(category, second_convert)
+    printf("convert from (%s) to (%s)", first_dimension, second_dimension)
   end
 
   private
 
-  def getConvertDimension(categoryName, convert)
+  def get_convert_dimension(category_name, convert)
     clear
-    dimensions = @mapping['category'][categoryName][convert]
+    dimensions = @mapping['category'][category_name][convert]
     max = dimensions.keys.length
     print("\n")
     printf("Choose the dimension (1 - %i): \n", max)
-    @renderer.printKeys(dimensions.keys)
+    @renderer.print_keys(dimensions.keys)
 
     selected = gets.chop.to_i
-    if checkInput(selected, max)
+    if check_input(selected, max)
       dimensions.keys[selected - 1]
     else
-      getConvertDimension(categoryName, convert)
+      get_convert_dimension(category_name, convert)
       clear
     end
   end
 
-  def getConvertFrom(categoryName)
+  def get_convert_from(category_name)
     clear
-    categorieEntry = @mapping['category'][categoryName]
-    max = categorieEntry.keys.length
+    category_entry = @mapping['category'][category_name]
+    max = category_entry.keys.length
     printf("Choose which to convert from (1 - %i): ", max)
-    getConvert(categorieEntry, max)
+    get_convert(category_entry, max)
   end
 
-  def getConvertTo(categoryName)
+  def get_convert_to(category_name)
     clear
-    categorieEntry = @mapping['category'][categoryName]
-    max = categorieEntry.keys.length
+    category_entry = @mapping['category'][category_name]
+    max = category_entry.keys.length
     printf("Choose which to convert to (1 - %i): ", max)
-    getConvert(categorieEntry, max)
+    get_convert(category_entry, max)
   end
 
-  def getCategory
+  def get_category
     clear
     categories = @mapping['category']
     max = categories.keys.length
-    @renderer.printWelcome
-    @renderer.printKeys(categories.keys)
+    @renderer.print_welcome
+    @renderer.print_keys(categories.keys)
     print("\n")
 
     printf("Choose your categorization (1 - %i): ", max)
     selected = gets.chop.to_i
-    if checkInput(selected, max)
+    if check_input(selected, max)
       categories.keys[selected - 1]
     else
-      getCategory
+      get_category
       clear
     end
   end
 
-  def checkInput(selected, max)
-    returnValue = false
+  def check_input(selected, max)
+    return_value = false
     if selected > max
       printf("Die Zahl ist zu groß.\n")
     else
       if selected <= 0
         printf("Die Zahl ist zu klein.\n")
       else
-        returnValue = true
+        return_value = true
       end
     end
-    returnValue
+    return_value
   end
 
-  def getConvert(dimensions, max)
+  def get_convert(dimensions, max)
     print("\n")
-    @renderer.printKeys(dimensions.keys)
+    @renderer.print_keys(dimensions.keys)
 
     selected = gets.chop.to_i
-    if checkInput(selected, max)
+    if check_input(selected, max)
       dimensions.keys[selected - 1]
     else
-      getConvert(dimensions, max)
+      get_convert(dimensions, max)
       clear
     end
   end

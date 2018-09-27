@@ -1,9 +1,9 @@
 class Renderer
-  def printWelcome
+  def print_welcome
     printf("Dimension Converter in Ruby\n")
   end
 
-  def printKeys(keys)
+  def print_keys(keys)
     i = 0
     keys.each do |dimension|
       i += 1
