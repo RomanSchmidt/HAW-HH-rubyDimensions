@@ -42,5 +42,9 @@
     "in": {
       "mm": 25.4
     }
-  }
+  },
+  "renderType":[
+    "single",
+    "range"
+  ]
 }
