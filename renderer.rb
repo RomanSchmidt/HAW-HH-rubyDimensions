@@ -1,10 +1,14 @@
 class Renderer
+  def initialize(min_value)
+    @min_value = min_value
+  end
+
   def print_get_single_value
-    output('Enter value to convert:')
+    output('Enter value to convert')
   end
 
   def print_welcome
-    output('     ### Dimension Converter in Ruby ###')
+    output('           ### Dimension Converter in Ruby ###')
   end
 
   def print_range_error_end_low
@@ -20,15 +24,15 @@ class Renderer
   end
 
   def get_end_value
-    output('Enter end value:')
+    output('Enter end value')
   end
 
   def get_start_value
-    output('Enter start value:')
+    output('Enter start value')
   end
 
   def get_step_value
-    output('Enter step value:')
+    output('Enter step value')
   end
 
   def print_wrong_render_type
@@ -44,21 +48,21 @@ class Renderer
     print_single(first_dimension, value, second_dimension, calculated_value)
   end
 
-  def print_choose_dimension(min, max, keys)
-    output("Choose the dimension (#{min} - #{max})")
+  def print_choose_dimension(keys)
+    output("Choose the dimension (#{@min_value} - #{keys.length})")
     print_keys(keys)
   end
 
-  def print_choose_convert_from(min, max)
-    output("Choose which to convert from (#{min} - #{max})")
+  def print_choose_convert_from(max)
+    output("Choose which to convert from (#{@min_value} - #{max})")
   end
 
-  def print_choose_convert_to(min, max)
-    output("Choose which to convert to (#{min} - #{max})")
+  def print_choose_convert_to(max)
+    output("Choose which to convert to (#{@min_value} - #{max})")
   end
 
-  def print_choose_categorization(min, max, categories)
-    output("Choose your categorization (#{min} - #{max})")
+  def print_choose_categorization(max, categories)
+    output("Choose your categorization (#{@min_value} - #{max})")
     print_keys(categories)
   end
 
@@ -85,7 +89,7 @@ class Renderer
   end
 
   def print_restart
-    output('Restart? (y / n):')
+    output('Restart? (y / n)')
   end
 
   def error_restart_value
@@ -93,11 +97,11 @@ class Renderer
   end
 
   def upper_frame
-    printf("╔════════════════════════════════════════════════════════════╗\n")
+    printf("╔%1$s╗\n", '═' * 76)
   end
 
   def lower_frame
-    printf("╚════════════════════════════════════════════════════════════╝\n")
+    printf("╚%1$s╝\n", '═' * 76)
   end
 
   private
@@ -112,7 +116,7 @@ class Renderer
 
   def output(value, with_upper_frame = true, with_lower_frame = true)
     with_upper_frame && upper_frame
-    printf("%1$s %2$-43s %1$5s\n", '║', value.to_s)
+    printf("%1$s %2$-56s %1$5s\n", '║', value.to_s)
     with_lower_frame && lower_frame
   end
 end
