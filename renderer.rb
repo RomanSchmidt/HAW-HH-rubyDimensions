@@ -1,4 +1,4 @@
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This class handles all the output.
 # It is also drawing a frame around the output and makes errors red inside.

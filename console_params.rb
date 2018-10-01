@@ -1,4 +1,4 @@
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This class maps all client params, clean them up and save them in params instance variable.
 class ConsoleParams

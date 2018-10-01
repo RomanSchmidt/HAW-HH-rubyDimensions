@@ -1,6 +1,6 @@
 require "json"
 
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This class is acting like a DataBase model. Its catching the mapping (from a json) in this case,
 # and providing methods to to handle them right.

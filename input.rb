@@ -1,6 +1,6 @@
 require "./console_params.rb"
 
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This class handles the input from console if its not set by params.
 # If there input is not within min and max value, try again.

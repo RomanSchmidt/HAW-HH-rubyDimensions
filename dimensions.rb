@@ -3,7 +3,7 @@ require "./input.rb"
 require "./converter.rb"
 require "./mapping.rb"
 
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This is the most important class which handles the interaction of all object.
 # It is handling the logic and input flow and delegating to the other objects to care of

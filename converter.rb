@@ -1,4 +1,4 @@
-# Author: Roman Schmidt
+# Author: Roman Schmidt, Daniel Osterholz
 #
 # This class uses the Mapping class to get and handle the convert logic.
 class Converter
