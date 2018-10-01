@@ -1,4 +1,10 @@
+# Author: Roman Schmidt
+#
+# This class maps all client params, clean them up and save them in params instance variable.
 class ConsoleParams
+
+  # Get Renderer as param.
+  # Get all Params but check for help / manual print after that.
   def initialize(renderer)
     @renderer = renderer
     @params = {}
@@ -6,6 +12,7 @@ class ConsoleParams
     check_for_help
   end
 
+  # move all valid params to given container
   def add_params(container)
     @params.each do |param, value|
       if value.match(/^[0-9\.]+$/)
@@ -24,6 +31,7 @@ class ConsoleParams
 
   private
 
+  # If help / manual is called, print it out and exit.
   def check_for_help
     if @params['h'] || @params['m']
       @renderer.print_manual
@@ -31,14 +39,17 @@ class ConsoleParams
     end
   end
 
+  # Get all params and send then to clean_up
   def get_params
     params_income = ARGV
 
     params_income.each do |param|
-      clean_up_param param
+      clean_up_param(param)
     end
   end
 
+  # Take care the param is starting with "-", have just one of it.
+  # Also make sure it has one value or set just true as value.
   def clean_up_param(param)
     matched = false
     match = param.match(/^-([^-]+)$/)

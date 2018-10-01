@@ -1,5 +1,9 @@
 require "json"
 
+# Author: Roman Schmidt
+#
+# This class is acting like a DataBase model. Its catching the mapping (from a json) in this case,
+# and providing methods to to handle them right.
 class Mapping
   private
 
@@ -12,32 +16,40 @@ class Mapping
 
   public
 
+  # Get the renderer as parameter in case of Error.
+  # Get the file and parse it to an object.
   def initialize(renderer)
     @mapping = JSON.parse(File.read('mapping.json'))
     @renderer = renderer
   end
 
+  # Returns all possible render types.
   def get_render_types
     @mapping[Mapping::RENDER_TYPE_KEY]
   end
 
+  # Returns all possible categories.
   def get_categories
     @mapping[Mapping::CATEGORY_KEY]
   end
 
-  def get_convert_entries(category_name)
+  # Return all scales from a category.
+  def get_scales(category_name)
     @mapping[Mapping::CATEGORY_KEY][category_name]
   end
 
+  # Return all dimensions of a scale.
   def get_dimensions(category_name, convert)
     @mapping[Mapping::CATEGORY_KEY][category_name][convert]
   end
 
+  # Return multiplier of a dimension.
   def get_multiplier (category_name, convert, dimension)
     @mapping[Mapping::CATEGORY_KEY][category_name][convert][dimension].fetch(MULTIPLIER_KEY)
   end
 
-  def get_transfer_code(first_dimension, second_dimension)
+  # Return the transfer multiplier from first to second dimension if it exists or exit with warning.
+  def get_transfer_multiplier(first_dimension, second_dimension)
     first_trans_dim = @mapping[Mapping::TRANSFER_CODE_KEY].fetch(first_dimension, nil)
     if nil === first_trans_dim
       @renderer.print_err_trans_dim(first_dimension)
