@@ -17,8 +17,10 @@ class Renderer
 
   # Regular output delegation.
   def print_welcome
-    value = '#### Dimension Converter in Ruby ###'
-    output(' ' * ((OUTPUT_LENGTH - value.length) / 2) + value)
+    value1 = '#### Dimension Converter in Ruby ### '
+    output(' ' * ((OUTPUT_LENGTH - value1.length) / 2) + value1, true , false)
+    value2 = '(-h / -m for manual)'
+    output(' ' * ((OUTPUT_LENGTH - value2.length) / 2) + value2, false, true)
   end
 
   # Regular output delegation.
