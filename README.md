@@ -13,14 +13,14 @@ The start Class is Main in the main.rb.
 This is a pure CLI tool. You can start it directly and get an ASCII menu. This will require input to convert the various
 values.
 
-#### Menu
+#### Menu Call
 
 It is possible to start the program with the -h or -m parameter to get a printout of the help.
 
 There you will find a list of all possible parameters that can lead to a direct output without further prompts and
 without menu output.
 
-### Menu
+### Menu Printout
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
