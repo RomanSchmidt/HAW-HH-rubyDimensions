@@ -1,4 +1,5 @@
 require "json"
+require "./renderer.rb"
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
@@ -9,7 +10,6 @@ class Mapping
 
   RANGE_KEY = 'range'
   SINGLE_KEY = 'single'
-  RENDER_TYPE_KEY = 'renderType'
   CATEGORY_KEY = 'category'
   TRANSFER_CODE_KEY = 'transferCode'
   MULTIPLIER_KEY = 'multiplier'
@@ -18,14 +18,9 @@ class Mapping
 
   # Get the renderer as parameter in case of Error.
   # Get the file and parse it to an object.
-  def initialize(renderer)
+  def initialize
     @mapping = JSON.parse(File.read('mapping.json'))
-    @renderer = renderer
-  end
-
-  # Returns all possible render types.
-  def get_render_types
-    @mapping[Mapping::RENDER_TYPE_KEY]
+    @renderer = Renderer.new
   end
 
   # Returns all possible categories.

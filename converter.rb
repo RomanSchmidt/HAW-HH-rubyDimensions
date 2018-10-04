@@ -1,10 +1,19 @@
+require "./mapping.rb"
+
 # Author: Roman Schmidt, Daniel Osterholz
 #
 # This class uses the Mapping class to get and handle the convert logic.
+# It should not be initialized any time.
 class Converter
-  def initialize(mapping)
-    @mapping = mapping
+
+  # make sure mapping is initialized
+  def initialize(renderer, input)
+    @renderer = renderer
+    @input = input
+    @mapping = Mapping.new
   end
+
+  protected
 
   # Get the value of the current category in the default dimension by multiplier from mapping.
   # If the scales are different, move the value to the second scale by transfer code from mapping.

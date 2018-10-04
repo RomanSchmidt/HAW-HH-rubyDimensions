@@ -4,9 +4,8 @@ This tool is written in Ruby on Rails to calculate from one dimension of a scale
 
 For this you will find a mapping.json that contains all mapping information.
 
-You can choose between a single output of a conversion
-or a series of outputs between a start and end value
-choose with the help of a step size.
+You can choose between a single output of a conversion or a series of outputs between a start and end value choose with 
+the help of a step size.
 
 The start Class is Main in the main.rb.
 
@@ -33,7 +32,7 @@ without menu output.
 ║   -second_convert=[integer] e.g. 0 = metric                          ║
 ║   -first_dimension=[integer] e.g. 0 = mm / inc                       ║
 ║   -second_dimension=[integer] e.g. 0 = mm / inc                      ║
-║   -render_type=[integer] 0=range, 1=single                           ║
+║   -output_types=[integer] 0=direct, 1=table                          ║
 ║   -value=[float] value for single rendering                          ║
 ║   -start_value=[float] start value for range rendering               ║
 ║   -end_value=[float] end value for range rendering                   ║
@@ -49,14 +48,45 @@ dimensions or scales freely.
 Please make sure that the indicated values ​​are within the valid ranges. Otherwise you will receive an error message and 
 you will be asked for a new value, even if you enter it via parameters.
 
-### Usage examples
+### Direct Output
 
-###### all parameters for a single output example
+Converts from one dimension to an other. Prints one line of result.
+
+###### all parameters
+
 ````
--category=1 -first_convert=1 -second_convert=1 -first_dimension=1 -second_dimension=1 -render_type=1 -value=1
+-category=1 -first_convert=1 -second_convert=1 -first_dimension=1 -second_dimension=1 -output_type=1 -value=1
 ````
 
-###### all parameters for a range output example
+###### output
+
 ````
--category=1 -first_convert=1 -second_convert=1 -first_dimension=1 -second_dimension=1 -render_type=2 -start_value=1 -end_value=100 -step_value=2
+╔══════════════════════════════════════════════════════════════════════╗
+║ single convert from 1.0 (mm) to 1.0 (mm)                             ║
+╚══════════════════════════════════════════════════════════════════════╝
+````
+
+### Table Output
+
+Category, converts, and dimensions are taken randomly from the mapping table. 
+Converts each step the value + step range * (step - 1) to the equal or an other dimension.
+Completely random within the possible conversions.
+
+###### all parameters
+
+````
+-output_type=2 -start_value=1 -end_value=10 -step_value=2
+````
+
+###### output
+
+````
+╔══════════════════════════════════════════════════════════════════════╗
+║ Convert table from mil to m                                          ║
+║ #1: 1.0 => 1609.33                                                   ║
+║ #2: 3.0 => 4827.98                                                   ║
+║ #3: 5.0 => 8046.63                                                   ║
+║ #4: 7.0 => 11265.29                                                  ║
+║ #5: 9.0 => 14483.94                                                  ║
+╚══════════════════════════════════════════════════════════════════════╝
 ````

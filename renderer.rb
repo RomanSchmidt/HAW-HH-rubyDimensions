@@ -11,90 +11,27 @@ class Renderer
   OUTPUT_LENGTH = 70
 
   # Regular output delegation.
-  def print_get_single_value
-    output('Enter value to convert')
-  end
-
-  # Regular output delegation.
-  def print_welcome
-    value1 = '#### Dimension Converter in Ruby ### '
-    output(' ' * ((OUTPUT_LENGTH - value1.length) / 2) + value1, true , false)
-    value2 = '(-h / -m for manual)'
-    output(' ' * ((OUTPUT_LENGTH - value2.length) / 2) + value2, false, true)
-  end
-
-  # Regular output delegation.
-  def print_range_error_end_low
-    output_error('End value is lower then start range!')
-  end
-
-  # Regular output delegation.
-  def print_range_error_step_low
-    output_error('Step value must be bigger then 0!')
-  end
-
-  # Drawing an range element without frames in upper / lower.
-  def print_range_element(position, value, calculated_value, first_dimension, second_dimension)
-    output("##{position}: #{value.round(2)} (#{first_dimension}) => #{calculated_value.round(2)} (#{second_dimension})", false, false)
-  end
-
-  # Regular output delegation.
-  def get_end_value
-    output('Enter end value')
-  end
-
-  # Regular output delegation.
-  def get_start_value
-    output('Enter start value')
-  end
-
-  # Regular output delegation.
-  def get_step_value
-    output('Enter step value')
+  def print_get_output_type(types)
+    output("Enter output type (#{MIN_VALUE} - #{types.length})")
+    print_keys(types)
   end
 
   # Regular error output delegation.
-  def print_wrong_render_type
-    output_error('Unknown render type!')
+  def print_error_output(type)
+    output_error("Unknown type: #{type}")
   end
 
-  # Regular output delegation.
-  def get_render_type(types)
-    output('Choose render type')
-    print_keys(types)
+  # Print welcome header and information about how to get the manual.
+  def print_welcome
+    value1 = '#### Dimension Converter in Ruby ### '
+    output(' ' * ((OUTPUT_LENGTH - value1.length) / 2) + value1, true, false)
+    value2 = '(-h / -m for manual)'
+    output(' ' * ((OUTPUT_LENGTH - value2.length) / 2) + value2, false, true)
   end
 
   # Final output of single render.
   def print_single_result(first_dimension, value, second_dimension, calculated_value)
     output("single convert from #{value} (#{first_dimension}) to #{calculated_value.round(2)} (#{second_dimension})")
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_first_dimension(keys)
-    output("Choose first dimension (#{MIN_VALUE} - #{keys.length})")
-    print_keys(keys)
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_second_dimension(keys)
-    output("Choose second dimension (#{MIN_VALUE} - #{keys.length})")
-    print_keys(keys)
-  end
-
-  # Regular output delegation.
-  def print_choose_convert_from(max)
-    output("Choose which to convert from (#{MIN_VALUE} - #{max})")
-  end
-
-  # Regular output delegation.
-  def print_choose_convert_to(max)
-    output("Choose which to convert to (#{MIN_VALUE} - #{max})")
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_categorization(max, categories)
-    output("Choose your categorization (#{MIN_VALUE} - #{max})")
-    print_keys(categories)
   end
 
   # Regular error output delegation.
