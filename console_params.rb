@@ -5,8 +5,9 @@ class ConsoleParams
 
   # Get Renderer as param.
   # Get all Params but check for help / manual print after that.
-  def initialize(renderer)
+  def initialize(renderer, min_value)
     @renderer = renderer
+    @min_value = min_value
     @params = {}
     get_params
     check_for_help
@@ -21,7 +22,7 @@ class ConsoleParams
         @renderer.print_error_just_numeric(param)
         exit(1)
       end
-      if value.to_i < Renderer::MIN_VALUE
+      if value.to_i < @min_value
         @renderer.print_param_to_low(value)
         exit(1)
       end

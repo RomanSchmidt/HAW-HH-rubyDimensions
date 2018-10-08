@@ -3,16 +3,13 @@
 # This class handles all the output.
 # It is also drawing a frame around the output and makes errors red inside.
 class Renderer
-  # Its not the best place for this field, but there is no much better.
-  # Its also the class with the most use of it.
-  MIN_VALUE = 1
 
   # Change the output tables shorter or larger in default length.
   OUTPUT_LENGTH = 70
 
   # Regular output delegation.
-  def print_get_output_type(types)
-    output("Enter output type (#{MIN_VALUE} - #{types.length})")
+  def print_get_output_type(types, min_value)
+    output("Enter output type (#{min_value} - #{types.length})")
     print_keys(types)
   end
 

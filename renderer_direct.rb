@@ -11,30 +11,30 @@ class RendererDirect < Renderer
   end
 
   # Regular output delegation. with keys.
-  def print_choose_first_dimension(keys)
-    output("Choose first dimension (#{MIN_VALUE} - #{keys.length})")
+  def print_choose_first_dimension(keys, min_value)
+    output("Choose first dimension (#{min_value} - #{keys.length})")
     print_keys(keys)
   end
 
   # Regular output delegation. with keys.
-  def print_choose_second_dimension(keys)
-    output("Choose second dimension (#{MIN_VALUE} - #{keys.length})")
+  def print_choose_second_dimension(keys, min_value)
+    output("Choose second dimension (#{min_value} - #{keys.length})")
     print_keys(keys)
   end
 
   # Regular output delegation.
-  def print_choose_convert_from(max)
-    output("Choose which to convert from (#{MIN_VALUE} - #{max})")
+  def print_choose_convert_from(max, min_value)
+    output("Choose which to convert from (#{min_value} - #{max})")
   end
 
   # Regular output delegation.
-  def print_choose_convert_to(max)
-    output("Choose which to convert to (#{MIN_VALUE} - #{max})")
+  def print_choose_convert_to(max, min_value)
+    output("Choose which to convert to (#{min_value} - #{max})")
   end
 
   # Regular output delegation. with keys.
-  def print_choose_categorization(max, categories)
-    output("Choose your categorization (#{MIN_VALUE} - #{max})")
+  def print_choose_categorization(max, min_value, categories)
+    output("Choose your categorization (#{min_value} - #{max})")
     print_keys(categories)
   end
 end

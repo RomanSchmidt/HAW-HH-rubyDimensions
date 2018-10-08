@@ -11,7 +11,7 @@ class Main
 
   def initialize
     @renderer = Renderer.new
-    @input = Input.new(@renderer, Renderer::MIN_VALUE)
+    @input = Input.new(@renderer)
     @renderer.print_welcome
     choose_output
   end

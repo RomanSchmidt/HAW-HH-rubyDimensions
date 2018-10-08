@@ -7,22 +7,27 @@ require "./console_params.rb"
 # If input is from params, set this key to nil.
 # Params from console are mapped by ConsoleParams class.
 class Input
+  private
+
+  # The default minimum value for inputs.
+  # Can be changed e.g. for 0 = general exit or to start from instead of 1.
+  MIN_VALUE = 1
+
   public
 
-  # Get Renderer and min_value as parameters
+  # Get Renderer as parameters
   # Create an instance of ConsoleParams get them into an instance variable.
-  def initialize(renderer, min)
+  def initialize(renderer)
     @renderer = renderer
     @params = {}
     init_params
-    @min_value = min
   end
 
   # Get the value of output_type (direct or table)
   def get_output_type(output_types)
     selected = @params['output_type']
     if nil === selected
-      @renderer.print_get_output_type(output_types)
+      @renderer.print_get_output_type(output_types, MIN_VALUE)
       begin
         selected = STDIN.gets.chop.to_i
       rescue Exception => e
@@ -40,7 +45,7 @@ class Input
 
   # Map the params from console to an instance var
   def init_params
-    console_params = ConsoleParams.new(@renderer)
+    console_params = ConsoleParams.new(@renderer, MIN_VALUE)
     console_params.add_params(@params)
   end
 
@@ -60,7 +65,7 @@ class Input
     if selected > max
       @renderer.print_smaller_input
     else
-      if selected < @min_value
+      if selected < MIN_VALUE
         @renderer.print_bigger_input
       else
         return_value = true

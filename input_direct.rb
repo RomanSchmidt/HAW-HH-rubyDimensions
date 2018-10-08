@@ -7,10 +7,10 @@ require "./renderer_direct.rb"
 # See parent class description.
 class InputDirect < Input
 
-  # Get Renderer and min_value as parameters
+  # Get Renderer as parameters
   # Create an instance of ConsoleParams get them into an instance variable.
   def initialize
-    super(RendererDirect.new, RendererDirect::MIN_VALUE)
+    super(RendererDirect.new)
   end
 
   # Get category with params fallback, check and recursion.
@@ -18,7 +18,7 @@ class InputDirect < Input
     selected = @params['category']
     max = categories.keys.length
     if nil === selected
-      @renderer.print_choose_categorization(max, categories.keys)
+      @renderer.print_choose_categorization(max, MIN_VALUE, categories.keys)
       begin
         selected = STDIN.gets.chop.to_i
       rescue Exception => e
@@ -26,7 +26,7 @@ class InputDirect < Input
       end
     end
     if check_input(selected, max)
-      categories.keys[selected - 1]
+      @params['category'] = categories.keys[selected - 1]
     else
       @params['category'] = nil
       get_category(categories)
@@ -40,25 +40,25 @@ class InputDirect < Input
       @renderer.print_get_single_value
       value = get_float
     end
-    value
+    @params['value'] = value
   end
 
   # Get convert to value with params fallback. Delegating to general get_convert.
   def get_convert_to(scale)
     default_value = @params['second_convert']
     if nil === default_value
-      @renderer.print_choose_convert_to(scale.keys.length)
+      @renderer.print_choose_convert_to(scale.keys.length, MIN_VALUE)
     end
-    get_convert(scale, default_value)
+    @params['second_convert'] = get_convert(scale, default_value)
   end
 
   # Get convert from value with params fallback. Delegating to general get_convert.
   def get_convert_from(scale)
     default_value = @params['first_convert']
     if nil === default_value
-      @renderer.print_choose_convert_from(scale.keys.length)
+      @renderer.print_choose_convert_from(scale.keys.length, MIN_VALUE)
     end
-    get_convert(scale, default_value)
+    @params['first_convert'] = get_convert(scale, default_value)
   end
 
   # Get first dimension with params fallback, check and recursion.
@@ -66,7 +66,7 @@ class InputDirect < Input
     selected = @params['first_dimension']
 
     if selected === nil
-      @renderer.print_choose_first_dimension(dimensions.keys)
+      @renderer.print_choose_first_dimension(dimensions.keys, MIN_VALUE)
       begin
         selected = STDIN.gets.chop.to_i
       rescue Exception => e
@@ -74,7 +74,7 @@ class InputDirect < Input
       end
     end
     if check_input(selected, max)
-      dimensions.keys[selected - 1]
+      @params['first_dimension'] = dimensions.keys[selected - 1]
     else
       @params['first_dimension'] = nil
       get_first_convert_dimension(dimensions, max)
@@ -86,7 +86,7 @@ class InputDirect < Input
     selected = @params['second_dimension']
 
     if selected === nil
-      @renderer.print_choose_second_dimension(dimensions.keys)
+      @renderer.print_choose_second_dimension(dimensions.keys, MIN_VALUE)
       begin
         selected = STDIN.gets.chop.to_i
       rescue Exception => e
@@ -95,7 +95,7 @@ class InputDirect < Input
     end
 
     if check_input(selected, max)
-      dimensions.keys[selected - 1]
+      @params['second_dimension'] = dimensions.keys[selected - 1]
     else
       @params['second_dimension'] = nil
       get_second_convert_dimension(dimensions, max)

@@ -20,32 +20,19 @@ class ConverterTable < Converter
   # Recursion in case of failure.
   # Prints out a table in the end.
   def start
-    start_value = get_start_value
-    end_value = get_end_value
+    start_value = @input.get_start_value
+    end_value = @input.get_end_value
     if check_table_values(start_value, end_value, nil)
-      step_value = get_step_range_value
+      step_value = @input.get_step_range_value
       if check_table_values(start_value, end_value, step_value)
         generate_table(start_value, end_value, step_value)
         return
+      else
+        start
       end
       return
     end
     start
-  end
-
-  # Get start value for the table.
-  def get_start_value
-    @input.get_start_value
-  end
-
-  # Get end value for the table.
-  def get_end_value
-    @input.get_end_value
-  end
-
-  # Get step value for the table.
-  def get_step_range_value
-    @input.get_step_range_value
   end
 
   # Make sure the table values are valid.
@@ -55,9 +42,12 @@ class ConverterTable < Converter
     return_value = true
     if end_value < start_value
       @renderer.print_range_error_end_low
+      @input.unset_end_value
+      @input.unset_start_value
       return_value = false
     elsif step_value != nil && step_value <= 0
       @renderer.print_range_error_step_low
+      @input.unset_step_value
       return_value = false
     end
     return_value
