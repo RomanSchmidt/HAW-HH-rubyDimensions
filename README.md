@@ -1,5 +1,10 @@
 # Ruby Dimensions
 
+```
+PR01 HAWariten
+Author: Roman Schmidt, Daniel Osterholz
+```
+
 This tool is written in Ruby on Rails to calculate from one dimension of a scale to another.
 
 For this you will find a mapping.json that contains all mapping information.
@@ -13,6 +18,8 @@ This is a pure CLI tool. You can start it directly and get an ASCII menu. This w
 values.
 
 ### Menu Call
+
+The first class of this script ist main.rb.
 
 It is possible to start the program with the -h or -m parameter to get a printout of the help.
 
@@ -90,3 +97,11 @@ Completely random within the possible conversions.
 ║ #5: 9.0 => 14483.94                                                  ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ````
+
+### Known Issues
+
+The console output is not working properly at ruby mine own console due to font.
+
+The colors of the error output is not working properly in Eclipse.
+
+There is not much of checks if the json inputs are valid.
