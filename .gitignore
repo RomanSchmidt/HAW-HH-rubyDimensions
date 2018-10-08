@@ -50,3 +50,6 @@ build-iPhoneSimulator/
 .rvmrc
 
 .idea
+.buildpath
+.project
+.settings/
