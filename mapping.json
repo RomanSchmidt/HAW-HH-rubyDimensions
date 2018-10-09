@@ -32,15 +32,45 @@
           "multiplier": 1.5783e-5,
           "default": false
         }
+      },
+      "mad": {
+        "potzerbie": {
+          "default": true,
+          "multiplier": 1
+        }
       }
     }
   },
   "transferCode": {
     "mm": {
-      "in": 0.0393701
+      "in": {
+        "multiplier": 0.03937007874015748031496062992126,
+        "constant": 0
+      },
+      "potzerbie": {
+        "multiplier":0.44182325094673207370657577119213,
+        "constant":0
+      }
     },
     "in": {
-      "mm": 25.4
+      "mm": {
+        "multiplier": 25.4,
+        "constant": 0
+      },
+      "potzerbie": {
+        "multiplier": 11.22231057404699467214702458828,
+        "constant": 0
+      }
+    },
+    "potzerbie": {
+      "mm": {
+        "multiplier": 2.263348517438173216473,
+        "constant": 0
+      },
+      "in":{
+        "multiplier":0.08910820934795957545169291338583,
+        "constant": 0
+      }
     }
   }
 }

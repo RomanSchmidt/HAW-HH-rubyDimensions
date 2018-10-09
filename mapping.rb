@@ -43,18 +43,19 @@ class Mapping
     @mapping[Mapping::CATEGORY_KEY][category_name][convert][dimension].fetch(MULTIPLIER_KEY)
   end
 
-  # Return the transfer multiplier from first to second dimension if it exists or exit with warning.
-  def get_transfer_multiplier(first_dimension, second_dimension)
+  # Return the transfer hash from first to second dimension if it exists or exit with warning.
+  # {multiplier: num, constant: num}
+  def get_transfer(first_dimension, second_dimension)
     first_trans_dim = @mapping[Mapping::TRANSFER_CODE_KEY].fetch(first_dimension, nil)
     if nil === first_trans_dim
       @renderer.print_err_trans_dim(first_dimension)
       exit(1)
     end
-    multiplier = first_trans_dim.fetch(second_dimension, nil)
-    if nil === multiplier
+    transfer = first_trans_dim.fetch(second_dimension, nil)
+    if nil === transfer
       @renderer.print_err_trans_dim(second_dimension)
       exit(1)
     end
-    multiplier
+    transfer
   end
 end

@@ -23,12 +23,15 @@ class Converter
 
     first_default_dimension = get_default_dimension(category, first_scale)
     default_multiplier = 1
+    default_constant = 0
     if first_scale != second_scale
       second_default_dimension = get_default_dimension(category, second_scale)
-      default_multiplier = @mapping.get_transfer_multiplier(first_default_dimension, second_default_dimension)
+      transfer = @mapping.get_transfer(first_default_dimension, second_default_dimension)
+      default_multiplier = transfer['multiplier']
+      default_constant = transfer['constant']
     end
 
-    default_converted = default_multiplier * value_to_default
+    default_converted = default_multiplier * value_to_default + default_constant
     default_converted * @mapping.get_multiplier(category, second_scale, second_dimension)
   end
 
