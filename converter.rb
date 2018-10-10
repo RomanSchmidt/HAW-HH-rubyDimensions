@@ -8,6 +8,7 @@ class Converter
 
   protected
 
+  LAST_PROPERTY = 'leaf'
   MULTIPLIER_PROPERTY = 'multiplier'
   CONSTANT_PROPERTY = 'constant'
   CONSTANT_BEFORE_PROPERTY = 'before'

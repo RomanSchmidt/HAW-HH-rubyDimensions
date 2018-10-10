@@ -8,7 +8,6 @@ require "./renderer_direct.rb"
 class ConverterDirect < Converter
   private
 
-  LAST_PROPERTY = 'leaf'
   SCALE_PROPERTY = 'scale'
 
   public

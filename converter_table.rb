@@ -6,6 +6,8 @@ require "./converter.rb"
 #
 # This Class handles the logical flow to get all parameters for a table output.
 class ConverterTable < Converter
+  PARENT_PROPERTY = :parent_property
+  DEPTH_PROPERTY = :depth_property
 
   # Initialize instance variables in the right order and make sure they get all parameters.
   # After all, start the script.
@@ -56,34 +58,56 @@ class ConverterTable < Converter
   # Print the final table with calculation for each step.
   # Make sure the borders are set right the output.
   def generate_table(start_value, end_value, step_value)
-    category = get_random_category
-    first_convert = get_random_convert(category)
-    second_convert = get_random_convert(category)
-    first_dimension = get_random_dimension(category, first_convert)
-    second_dimension = get_random_dimension(category, second_convert)
-    current_value = start_value
-    i = 0
-    @renderer.print_table_header(first_dimension, second_dimension)
-    while current_value <= end_value do
-      i += 1
-      calculated_value = get_value(category, first_convert, second_convert, first_dimension, second_dimension, current_value)
-      @renderer.print_table_element(i, current_value, calculated_value)
-      current_value += step_value
+    #category = get_random_category
+    first_convert = get_random_dimension
+    puts 'foo'
+    puts first_convert
+    exit(1)
+    #second_convert = get_random_convert(category)
+    #first_dimension = get_random_dimension(category, first_convert)
+    #second_dimension = get_random_dimension(category, second_convert)
+    #current_value = start_value
+    #i = 0
+    #@renderer.print_table_header(first_dimension, second_dimension)
+    #while current_value <= end_value do
+    #  i += 1
+    #  calculated_value = get_value(category, first_convert, second_convert, first_dimension, second_dimension, current_value)
+    #  @renderer.print_table_element(i, current_value, calculated_value)
+    #  current_value += step_value
+    #end
+    #@renderer.lower_frame
+  end
+
+  def get_random_dimension
+    current_node = {ELEMENT_PROPERTY => @mapping.get_categories, NAME_PROPERTY => 'categories'}
+    node = get_next_random_node(current_node)
+
+    puts 'node'
+    puts node
+
+    #dimensions = @mapping.get_dimensions(category, convert)
+    #random = Random.rand(dimensions.keys.length)
+    #dimensions.keys[random - 1]
+  end
+
+  def get_next_random_node(current_node)
+    if current_node && current_node[ELEMENT_PROPERTY][LAST_PROPERTY] === true
+      current_node
+    else
+      random = Random.rand(current_node[ELEMENT_PROPERTY].keys.length)
+      name = current_node[ELEMENT_PROPERTY].keys[random]
+      new_node = current_node[ELEMENT_PROPERTY][name]
+      parent_depth = current_node[DEPTH_PROPERTY] || 0
+      get_next_random_node({ELEMENT_PROPERTY => new_node, NAME_PROPERTY => name, PARENT_PROPERTY => current_node, DEPTH_PROPERTY => 1 + parent_depth})
     end
-    @renderer.lower_frame
   end
 
-  def get_random_dimension(category, convert)
-    dimensions = @mapping.get_dimensions(category, convert)
-    random = Random.rand(dimensions.keys.length)
-    dimensions.keys[random - 1]
-  end
 
-  def get_random_convert(category)
-    converts = @mapping.get_categories[category]
-    random = Random.rand(converts.keys.length)
-    converts.keys[random - 1]
-  end
+  #def get_random_convert(category)
+  #  converts = @mapping.get_categories[category]
+  #  random = Random.rand(converts.keys.length)
+  #  converts.keys[random - 1]
+  #end
 
   def get_random_category
     categories = @mapping.get_categories
