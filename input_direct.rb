@@ -1,5 +1,6 @@
 require "./input.rb"
 require "./renderer_direct.rb"
+require "./converter.rb"
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
@@ -13,23 +14,20 @@ class InputDirect < Input
     super(RendererDirect.new)
   end
 
-  # Get category with params fallback, check and recursion.
-  def get_category(categories)
-    selected = @params['category']
-    max = categories.keys.length
-    if nil === selected
-      @renderer.print_choose_categorization(max, MIN_VALUE, categories.keys)
-      begin
-        selected = STDIN.gets.chop.to_i
-      rescue Exception => e
-        exit(1)
-      end
+  # Print the current selectables and get + check the input to return one.
+  # Returns a hash with the name and the chosen node.
+  def get_node_element(node, direction)
+    node_element = node[Converter::ELEMENT_PROPERTY]
+    @renderer.print_select(MIN_VALUE, node_element.keys, node[Converter::NAME_PROPERTY], direction)
+    begin
+      selected = STDIN.gets.chop.to_i
+    rescue Exception => e
+      exit(1)
     end
-    if check_input(selected, max)
-      @params['category'] = categories.keys[selected - 1]
+    if check_input(selected, node_element.keys.length)
+      {Converter::ELEMENT_PROPERTY => node_element[node_element.keys[selected - 1]], Converter::NAME_PROPERTY => node_element.keys[selected - 1]}
     else
-      @params['category'] = nil
-      get_category(categories)
+      get_node_element(node, direction)
     end
   end
 
@@ -41,85 +39,5 @@ class InputDirect < Input
       value = get_float
     end
     @params['value'] = value
-  end
-
-  # Get convert to value with params fallback. Delegating to general get_convert.
-  def get_convert_to(scale)
-    default_value = @params['second_convert']
-    if nil === default_value
-      @renderer.print_choose_convert_to(scale.keys.length, MIN_VALUE)
-    end
-    @params['second_convert'] = get_convert(scale, default_value)
-  end
-
-  # Get convert from value with params fallback. Delegating to general get_convert.
-  def get_convert_from(scale)
-    default_value = @params['first_convert']
-    if nil === default_value
-      @renderer.print_choose_convert_from(scale.keys.length, MIN_VALUE)
-    end
-    @params['first_convert'] = get_convert(scale, default_value)
-  end
-
-  # Get first dimension with params fallback, check and recursion.
-  def get_first_convert_dimension(dimensions, max)
-    selected = @params['first_dimension']
-
-    if selected === nil
-      @renderer.print_choose_first_dimension(dimensions.keys, MIN_VALUE)
-      begin
-        selected = STDIN.gets.chop.to_i
-      rescue Exception => e
-        exit(1)
-      end
-    end
-    if check_input(selected, max)
-      @params['first_dimension'] = dimensions.keys[selected - 1]
-    else
-      @params['first_dimension'] = nil
-      get_first_convert_dimension(dimensions, max)
-    end
-  end
-
-  # Get second dimension with params fallback, check and recursion.
-  def get_second_convert_dimension(dimensions, max)
-    selected = @params['second_dimension']
-
-    if selected === nil
-      @renderer.print_choose_second_dimension(dimensions.keys, MIN_VALUE)
-      begin
-        selected = STDIN.gets.chop.to_i
-      rescue Exception => e
-        exit(1)
-      end
-    end
-
-    if check_input(selected, max)
-      @params['second_dimension'] = dimensions.keys[selected - 1]
-    else
-      @params['second_dimension'] = nil
-      get_second_convert_dimension(dimensions, max)
-    end
-  end
-
-  private
-
-  # General function for convert with check and recursion.
-  def get_convert(dimensions, default_dimension)
-    selected = default_dimension
-    if selected === nil
-      @renderer.print_keys(dimensions.keys)
-
-      begin
-        selected = STDIN.gets.chop.to_i
-      rescue Exception => e
-        exit(1)
-      end
-    end
-    if check_input(selected, dimensions.keys.length)
-      dimensions.keys[selected - 1]
-    else
-      get_convert(dimensions, nil)
-    end
   end
 end

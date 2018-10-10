@@ -1,42 +1,62 @@
 {
   "category": {
+    "temperature": {
+      "celsius": {
+        "multiplier": 1,
+        "default": true,
+        "leaf" :true
+      },
+      "fahrenheit": {
+        "multiplier": 1,
+        "default": true,
+        "leaf" :true
+      },
+      "kelvin": {
+        "multiplier": 1,
+        "default": true,
+        "leaf" :true
+      }
+    },
     "metrication": {
       "metric": {
         "mm": {
           "multiplier": 1,
-          "default": true
+          "default": true,
+          "leaf" :true
         },
         "cm": {
           "multiplier": 0.1,
-          "default": false
+          "leaf" :true
         },
         "m": {
           "multiplier": 0.001,
-          "default": false
+          "leaf" :true
         },
         "km": {
           "multiplier": 1e-6,
-          "default": false
+          "leaf" :true
         }
       },
       "angloSaxon": {
         "in": {
           "multiplier": 1,
-          "default": true
+          "default": true,
+          "leaf" :true
         },
         "ft": {
           "multiplier": 0.0833333,
-          "default": false
+          "leaf" :true
         },
         "mil": {
           "multiplier": 1.5783e-5,
-          "default": false
+          "leaf" :true
         }
       },
       "mad": {
         "potzerbie": {
           "default": true,
-          "multiplier": 1
+          "multiplier": 1,
+          "leaf" :true
         }
       }
     }
@@ -45,31 +65,97 @@
     "mm": {
       "in": {
         "multiplier": 0.03937007874015748031496062992126,
-        "constant": 0
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
       },
       "potzerbie": {
-        "multiplier":0.44182325094673207370657577119213,
-        "constant":0
+        "multiplier": 0.44182325094673207370657577119213,
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
       }
     },
     "in": {
       "mm": {
         "multiplier": 25.4,
-        "constant": 0
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
       },
       "potzerbie": {
         "multiplier": 11.22231057404699467214702458828,
-        "constant": 0
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
       }
     },
     "potzerbie": {
       "mm": {
         "multiplier": 2.263348517438173216473,
-        "constant": 0
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
       },
-      "in":{
-        "multiplier":0.08910820934795957545169291338583,
-        "constant": 0
+      "in": {
+        "multiplier": 0.08910820934795957545169291338583,
+        "constant": {
+          "before": 0,
+          "after": 0
+        }
+      }
+    },
+    "celsius": {
+      "fahrenheit": {
+        "multiplier": 1.8,
+        "constant": {
+          "before": 0,
+          "after": 32
+        }
+      },
+      "kelvin": {
+        "multiplier": 1,
+        "constant": {
+          "before": 273.15,
+          "after": 0
+        }
+      }
+    },
+    "fahrenheit": {
+      "celsius": {
+        "multiplier": 1.8,
+        "constant": {
+          "before": -32,
+          "after": 0
+        }
+      },
+      "kelvin": {
+        "multiplier": 0.55555555555555555555555555555556,
+        "constant": {
+          "before": -32,
+          "after": 237.15
+        }
+      }
+    },
+    "kelvin": {
+      "celsius": {
+        "multiplier": 1,
+        "constant": {
+          "before": -273.15,
+          "after": 0
+        }
+      },
+      "fahrenheit": {
+        "multiplier": 1.8,
+        "constant": {
+          "before": -237.15,
+          "after": 32
+        }
       }
     }
   }

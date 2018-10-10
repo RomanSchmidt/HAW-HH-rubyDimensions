@@ -6,6 +6,12 @@ require "./renderer_direct.rb"
 #
 # This Class handles the logical flow to get all parameters for a direct output.
 class ConverterDirect < Converter
+  private
+
+  LAST_PROPERTY = 'leaf'
+  SCALE_PROPERTY = 'scale'
+
+  public
 
   # Initialize instance variables in the right order and make sure they get all parameters.
   # After all, start the script.
@@ -20,48 +26,43 @@ class ConverterDirect < Converter
   # Recursion in case of failure.
   # Prints out a single line in the end.
   def start
-    category = get_category
-    first_convert = get_convert_from(category)
-    first_dimension = get_first_convert_dimension(category, first_convert)
-    second_convert = get_convert_to(category)
-    second_dimension = get_second_convert_dimension(category, second_convert)
-    get_single(category, first_convert, second_convert, first_dimension, second_dimension)
-  end
-
-  # Get the category. e.g. metrication
-  def get_category
-    categories = @mapping.get_categories
-    @input.get_category(categories)
-  end
-
-  # Get the scales to convert from. e.g. metrics
-  def get_convert_from(category_name)
-    scales = @mapping.get_scales(category_name)
-    @input.get_convert_from(scales)
-  end
-
-  # Get the dimension of the first scale to convert from. e.g. mm / inc
-  def get_first_convert_dimension(category_name, convert)
-    dimensions = @mapping.get_dimensions(category_name, convert)
-    @input.get_first_convert_dimension(dimensions, dimensions.keys.length)
-  end
-
-  # Get the dimension of the second scale to convert to. e.g. mm / inc
-  def get_second_convert_dimension(category_name, convert)
-    dimensions = @mapping.get_dimensions(category_name, convert)
-    @input.get_second_convert_dimension(dimensions, dimensions.keys.length)
-  end
-
-  # Get the scales to convert to. e.g. metrics
-  def get_convert_to(category_name)
-    scales = @mapping.get_scales(category_name)
-    @input.get_convert_to(scales)
-  end
-
-  # Calculate and print out the single value.
-  def get_single(category, first_convert, second_convert, first_dimension, second_dimension)
+    @renderer.print_first_dimension
+    first_result = get_dimension(RendererDirect::DIRECTION_IN)
+    first_dimension = first_result[LAST_PROPERTY]
+    first_scale = first_result[SCALE_PROPERTY]
+    @renderer.print_second_dimension
+    second_result = get_dimension(RendererDirect::DIRECTION_OUT)
+    second_dimension = second_result[LAST_PROPERTY]
+    second_scale = second_result[SCALE_PROPERTY]
     value = @input.get_value
-    calculated_value = get_value(category, first_convert, second_convert, first_dimension, second_dimension, value)
+
+    convert(first_scale, first_dimension, second_scale, second_dimension, value)
+  end
+
+  def convert(first_scale, first_dimension, second_scale, second_dimension, value)
+    calculated_value = get_value(first_scale, first_dimension, second_scale, second_dimension, value)
     @renderer.print_single_result(first_dimension, value, second_dimension, calculated_value)
+  end
+
+  # Running a loop as long as the current node is not a leaf.
+  # Each loop is printing out the current node keys to select via input and go lower the three.
+  # Returns a hash with the last property and its scale three.
+  def get_dimension(direction)
+    last_node = nil
+    current_node = {ELEMENT_PROPERTY => @mapping.get_categories, NAME_PROPERTY => 'categories'}
+    begin
+      last_node = current_node
+      current_node = get_next_node(current_node, direction)
+    end while !current_node || current_node && current_node[ELEMENT_PROPERTY].fetch(LAST_PROPERTY, false) === false
+    {LAST_PROPERTY => current_node[NAME_PROPERTY], SCALE_PROPERTY => last_node}
+  end
+
+  # Checking the current node is a leaf and return it or get the the next depth via input.
+  def get_next_node(current_node, direction)
+    if current_node && current_node[ELEMENT_PROPERTY][LAST_PROPERTY] === true
+      current_node
+    else
+      @input.get_node_element(current_node, direction)
+    end
   end
 end

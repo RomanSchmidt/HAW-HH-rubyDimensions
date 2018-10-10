@@ -1,15 +1,14 @@
 require "json"
 require "./renderer.rb"
+require "./converter.rb"
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
 # This class is acting like a DataBase model. Its catching the mapping (from a json) in this case,
 # and providing methods to to handle them right.
 class Mapping
-  private
+  public
 
-  RANGE_KEY = 'range'
-  SINGLE_KEY = 'single'
   CATEGORY_KEY = 'category'
   TRANSFER_CODE_KEY = 'transferCode'
   MULTIPLIER_KEY = 'multiplier'
@@ -46,6 +45,10 @@ class Mapping
   # Return the transfer hash from first to second dimension if it exists or exit with warning.
   # {multiplier: num, constant: num}
   def get_transfer(first_dimension, second_dimension)
+    if first_dimension == second_dimension
+      return {Converter::MULTIPLIER_PROPERTY => 1, Converter::CONSTANT_PROPERTY => {Converter::CONSTANT_BEFORE_PROPERTY => 0, Converter::CONSTANT_AFTER_PROPERTY => 0}}
+    end
+
     first_trans_dim = @mapping[Mapping::TRANSFER_CODE_KEY].fetch(first_dimension, nil)
     if nil === first_trans_dim
       @renderer.print_err_trans_dim(first_dimension)
@@ -53,7 +56,7 @@ class Mapping
     end
     transfer = first_trans_dim.fetch(second_dimension, nil)
     if nil === transfer
-      @renderer.print_err_trans_dim(second_dimension)
+      @renderer.print_err_trans_dim(first_dimension, second_dimension)
       exit(1)
     end
     transfer

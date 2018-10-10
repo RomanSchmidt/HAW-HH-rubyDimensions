@@ -4,8 +4,16 @@
 # It is also drawing a frame around the output and makes errors red inside.
 class Renderer
 
+  private
+
   # Change the output tables shorter or larger in default length.
   OUTPUT_LENGTH = 70
+
+  public
+
+  # Mostly used for printout to help the user.
+  DIRECTION_IN = :in_direction
+  DIRECTION_OUT = :out_direction
 
   # Regular output delegation.
   def print_get_output_type(types, min_value)
@@ -63,8 +71,12 @@ class Renderer
   end
 
   # Regular output delegation.
-  def print_err_trans_dim(first_dimension)
-    output_error("Transfer dimension not found: #{first_dimension}!")
+  def print_err_trans_dim(first_dimension, second_dimension = nil)
+    if second_dimension
+      output_error("Not able to convert from \"#{first_dimension}\" to \"#{second_dimension}\"!")
+    else
+      output_error("Transfer dimension not found: #{first_dimension}!")
+    end
   end
 
   # Draw upper frame border.
@@ -84,20 +96,21 @@ class Renderer
 
   # Output of the whole manual / help.
   def print_manual
-    output("You can start this script without parameters to get the menu.", true, false)
-    output("", false, false)
-    output("You can put one or more following parameters to skip the input:", false, false)
-    output("  -h -m to get this help screen", false, false)
-    output("  -category=[integer] e.g. 0 = metrication", false, false)
-    output("  -first_convert=[integer] e.g. 0 = metric", false, false)
-    output("  -second_convert=[integer] e.g. 0 = metric", false, false)
-    output("  -first_dimension=[integer] e.g. 0 = mm / inc", false, false)
-    output("  -second_dimension=[integer] e.g. 0 = mm / inc", false, false)
-    output("  -render_type=[integer] 0=range, 1=single", false, false)
-    output("  -value=[float] value for single rendering", false, false)
-    output("  -start_value=[float] start value for range rendering", false, false)
-    output("  -end_value=[float] end value for range rendering", false, false)
-    output("  -step_value=[float] step value for range rendering", false, true)
+    output('You can start this script without parameters to get the menu.', true, false)
+    output('', false, false)
+    output('You can put one or more following parameters to skip the input:', false, false)
+    output('  -h -m to get this help screen', false, false)
+    #output('  -category=[integer] e.g. 0 = metrication', false, false)
+    #output('  -first_convert=[integer] e.g. 0 = metric', false, false)
+    #output('  -second_convert=[integer] e.g. 0 = metric', false, false)
+    #output('  -first_dimension=[integer] e.g. 0 = mm / inc', false, false)
+    #output('  -second_dimension=[integer] e.g. 0 = mm / inc', false, false)
+    #output('  -render_type=[integer] 0=range, 1=single', false, false)
+    #output('  -value=[float] value for single rendering', false, false)
+    #output('  -start_value=[float] start value for range rendering', false, false)
+    #output('  -end_value=[float] end value for range rendering', false, false)
+    #output('  -step_value=[float] step value for range rendering', false, true)
+    output_error('out of date')
   end
 
   private
@@ -105,7 +118,7 @@ class Renderer
   # Output with colorizing content red in needed default length.
   def output_error(value)
     upper_frame
-    printf("%1$s \e[31m%2$-#{OUTPUT_LENGTH - 6}s\e[0m %1$5s\n", '║', value.to_s)
+    printf("%1$s \e[31m%2$-#{OUTPUT_LENGTH - 6}s\e[0m %1$5s\n", '║', 'ERROR: ' + value.to_s)
     lower_frame
   end
 

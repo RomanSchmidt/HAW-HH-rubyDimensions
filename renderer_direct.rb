@@ -5,36 +5,25 @@ require "./renderer.rb"
 # All outputs that are just for direct output.
 # See parent class.
 class RendererDirect < Renderer
+  # Print out selectables with topic.
+  def print_select(min_value, keys, name, direction)
+    direction_string = direction === DIRECTION_IN ? 'to convert to' : 'to convert from'
+    output("Please select #{name} #{direction_string}. (#{min_value} - #{keys.length})")
+    print_keys(keys)
+  end
+
+  # Regular output delegation.
+  def print_first_dimension
+    output('First dimension')
+  end
+
+  # Regular output delegation.
+  def print_second_dimension
+    output('Second dimension')
+  end
+
   # Regular output delegation.
   def print_get_single_value
     output('Enter value to convert')
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_first_dimension(keys, min_value)
-    output("Choose first dimension (#{min_value} - #{keys.length})")
-    print_keys(keys)
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_second_dimension(keys, min_value)
-    output("Choose second dimension (#{min_value} - #{keys.length})")
-    print_keys(keys)
-  end
-
-  # Regular output delegation.
-  def print_choose_convert_from(max, min_value)
-    output("Choose which to convert from (#{min_value} - #{max})")
-  end
-
-  # Regular output delegation.
-  def print_choose_convert_to(max, min_value)
-    output("Choose which to convert to (#{min_value} - #{max})")
-  end
-
-  # Regular output delegation. with keys.
-  def print_choose_categorization(max, min_value, categories)
-    output("Choose your categorization (#{min_value} - #{max})")
-    print_keys(categories)
   end
 end
