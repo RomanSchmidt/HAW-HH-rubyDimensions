@@ -37,17 +37,6 @@ class Renderer
     output('Enter value to convert')
   end
 
-  # Regular output delegation.
-  def print_get_output_type(types, min_value)
-    output("Enter output type (#{min_value} - #{types.length})")
-    print_keys(types)
-  end
-
-  # Regular error output delegation.
-  def print_error_output(type)
-    output_error("Unknown type: #{type}")
-  end
-
   # Print welcome header and information about how to get the manual.
   def print_welcome
     value1 = '#### Dimension Converter in Ruby ### '
@@ -62,24 +51,25 @@ class Renderer
   end
 
   # Regular error output delegation.
-  def print_smaller_input
+  def error_smaller_input
     output_error('Selected number too big!')
   end
 
   # Regular error output delegation.
-  def print_bigger_input
+  def error_bigger_input
     output_error('Selected number too small!')
   end
 
-  # Regular error output delegation.
-  def print_param_to_low(name)
-    output_error("\"#{name}\" number too small!")
+  # Regular output delegation.
+  def error_transfer_dimension(first_dimension, second_dimension = nil)
+    if second_dimension
+      output_error("Not able to convert from \"#{first_dimension}\" to \"#{second_dimension}\"!")
+    else
+      output_error("Transfer dimension not found: #{first_dimension}!")
+    end
   end
 
-  # Regular error output delegation.
-  def print_error_just_numeric(name)
-    output_error("\"#{name}\" value is not numeric!")
-  end
+  private
 
   # Looping over all keys and draw them within one frame.
   def print_keys(keys)
@@ -92,15 +82,6 @@ class Renderer
     lower_frame
   end
 
-  # Regular output delegation.
-  def print_err_trans_dim(first_dimension, second_dimension = nil)
-    if second_dimension
-      output_error("Not able to convert from \"#{first_dimension}\" to \"#{second_dimension}\"!")
-    else
-      output_error("Transfer dimension not found: #{first_dimension}!")
-    end
-  end
-
   # Draw upper frame border.
   def upper_frame
     printf("╔%1$s╗\n", '═' * OUTPUT_LENGTH)
@@ -110,32 +91,6 @@ class Renderer
   def lower_frame
     printf("╚%1$s╝\n", '═' * OUTPUT_LENGTH)
   end
-
-  # Regular error output delegation.
-  def print_error_param(param)
-    output_error("Unknown parameter (#{param})!")
-  end
-
-  # Output of the whole manual / help.
-  def print_manual
-    output('You can start this script without parameters to get the menu.', true, false)
-    output('', false, false)
-    output('You can put one or more following parameters to skip the input:', false, false)
-    output('  -h -m to get this help screen', false, false)
-    #output('  -category=[integer] e.g. 0 = metrication', false, false)
-    #output('  -first_convert=[integer] e.g. 0 = metric', false, false)
-    #output('  -second_convert=[integer] e.g. 0 = metric', false, false)
-    #output('  -first_dimension=[integer] e.g. 0 = mm / inc', false, false)
-    #output('  -second_dimension=[integer] e.g. 0 = mm / inc', false, false)
-    #output('  -render_type=[integer] 0=range, 1=single', false, false)
-    #output('  -value=[float] value for single rendering', false, false)
-    #output('  -start_value=[float] start value for range rendering', false, false)
-    #output('  -end_value=[float] end value for range rendering', false, false)
-    #output('  -step_value=[float] step value for range rendering', false, true)
-    output_error('out of date')
-  end
-
-  private
 
   # Output with colorizing content red in needed default length.
   def output_error(value)

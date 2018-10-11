@@ -42,21 +42,6 @@ class Input
     get_float
   end
 
-  # Get the value of output_type (direct or table)
-  def get_output_type(output_types)
-    @renderer.print_get_output_type(output_types, MIN_VALUE)
-    begin
-      selected = STDIN.gets.chop.to_i
-    rescue Exception => e
-      exit(1)
-    end
-    if check_input(selected, output_types.length)
-      output_types[selected - 1]
-    else
-      get_output_type(output_types)
-    end
-  end
-
   protected
 
   # General get float function with a catch block
@@ -73,10 +58,10 @@ class Input
   def check_input(selected, max)
     return_value = false
     if selected > max
-      @renderer.print_smaller_input
+      @renderer.error_smaller_input
     else
       if selected < MIN_VALUE
-        @renderer.print_bigger_input
+        @renderer.error_bigger_input
       else
         return_value = true
       end
