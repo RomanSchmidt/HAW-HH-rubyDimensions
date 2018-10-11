@@ -1,5 +1,3 @@
-require "./console_params.rb"
-
 # Author: Roman Schmidt, Daniel Osterholz
 #
 # This class handles the input from console if its not set by params.
@@ -19,20 +17,38 @@ class Input
   # Create an instance of ConsoleParams get them into an instance variable.
   def initialize(renderer)
     @renderer = renderer
-    @params = {}
-    init_params
+  end
+
+  # Print the current selectables and get + check the input to return one.
+  # Returns a hash with the name and the chosen node.
+  def get_node_element(node, direction)
+    node_element = node[Converter::ELEMENT_PROPERTY]
+    @renderer.print_select(MIN_VALUE, node_element.keys, node[Converter::NAME_PROPERTY], direction)
+    begin
+      selected = STDIN.gets.chop.to_i
+    rescue Exception => e
+      exit(1)
+    end
+    if check_input(selected, node_element.keys.length)
+      {Converter::ELEMENT_PROPERTY => node_element[node_element.keys[selected - 1]], Converter::NAME_PROPERTY => node_element.keys[selected - 1]}
+    else
+      get_node_element(node, direction)
+    end
+  end
+
+  # Get value for direct render with params fallback. No check! No recursion!
+  def get_value
+    @renderer.print_get_single_value
+    get_float
   end
 
   # Get the value of output_type (direct or table)
   def get_output_type(output_types)
-    selected = @params['output_type']
-    if nil === selected
-      @renderer.print_get_output_type(output_types, MIN_VALUE)
-      begin
-        selected = STDIN.gets.chop.to_i
-      rescue Exception => e
-        exit(1)
-      end
+    @renderer.print_get_output_type(output_types, MIN_VALUE)
+    begin
+      selected = STDIN.gets.chop.to_i
+    rescue Exception => e
+      exit(1)
     end
     if check_input(selected, output_types.length)
       output_types[selected - 1]
@@ -42,12 +58,6 @@ class Input
   end
 
   protected
-
-  # Map the params from console to an instance var
-  def init_params
-    console_params = ConsoleParams.new(@renderer, MIN_VALUE)
-    console_params.add_params(@params)
-  end
 
   # General get float function with a catch block
   def get_float
