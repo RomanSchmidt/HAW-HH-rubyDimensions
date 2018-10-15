@@ -22,6 +22,7 @@ class InputMockUp < Input
 
   OUTPUT = 1.0
 
+
   def get_note_element
     node_element = [ConverterMockUp::ELEMENT_PROPERTY]
 
