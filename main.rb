@@ -5,8 +5,11 @@ require "./mapping.rb"
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
-# This class
+# This class builds all dependencies that have to be injected.
 class Main
+  private
+
+  # Factory for converter.
   def initialize
     renderer = Renderer.new
     renderer.print_welcome

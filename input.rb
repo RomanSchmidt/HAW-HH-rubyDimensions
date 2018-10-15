@@ -11,43 +11,40 @@ class Input
   # Can be changed e.g. for 0 = general exit or to start from instead of 1.
   MIN_VALUE = 1
 
-  public
-
-  # Get Renderer as parameters
-  # Create an instance of ConsoleParams get them into an instance variable.
+  # Makes sure renderer is initialized
   def initialize(renderer)
     @renderer = renderer
   end
 
+  public
+
   # Print the current selectables and get + check the input to return one.
   # Returns a hash with the name and the chosen node.
+  # Recursion in case of false input.
   def get_node_element(node, direction)
-    if node.is_a? === false
-      return nil
-    end
-    node_element = node[Converter::ELEMENT_PROPERTY]
-    @renderer.print_select(MIN_VALUE, node_element.keys, node[Converter::NAME_PROPERTY], direction)
+    node_element = node[Converter::ELEMENT_KEY]
+    @renderer.print_select(Input::MIN_VALUE, node_element.keys, node[Converter::NAME_KEY], direction)
     begin
       selected = STDIN.gets.chop.to_i
     rescue Exception => e
       exit(1)
     end
-    if check_input(selected, node_element.keys.length)
-      {Converter::ELEMENT_PROPERTY => node_element[node_element.keys[selected - 1]], Converter::NAME_PROPERTY => node_element.keys[selected - 1]}
+    if input_valid?(selected, node_element.keys.length)
+      {Converter::ELEMENT_KEY => node_element[node_element.keys[selected - 1]], Converter::NAME_KEY => node_element.keys[selected - 1]}
     else
       get_node_element(node, direction)
     end
   end
 
-  # Get value for direct render with params fallback. No check! No recursion!
-  def get_value
-    @renderer.print_get_single_value
+  # Get value to convert from
+  def get_value_to_convert
+    @renderer.get_value_to_convert
     get_float
   end
 
-  protected
+  private
 
-  # General get float function with a catch block
+  # General get float function with a catch block for ctrl + c
   def get_float
     begin
       STDIN.gets.chop.to_f
@@ -58,17 +55,17 @@ class Input
 
   # Check function for most inputs.
   # Making sure value is within the min / max range with error rendering.
-  def check_input(selected, max)
-    return_value = false
+  def input_valid?(selected, max)
+    is_valid = false
     if selected > max
-      @renderer.error_smaller_input
+      @renderer.error_input_big
     else
-      if selected < MIN_VALUE
-        @renderer.error_bigger_input
+      if selected < Input::MIN_VALUE
+        @renderer.error_input_small
       else
-        return_value = true
+        is_valid = true
       end
     end
-    return_value
+    is_valid
   end
 end
