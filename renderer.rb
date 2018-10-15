@@ -9,6 +9,10 @@ class Renderer
   # Change the output tables shorter or larger in default length.
   OUTPUT_LENGTH = 70
 
+  # Constant strings for output
+  STRING_CONVERT_TO = 'to convert to'
+  STRING_CONVERT_FROM = 'to convert from'
+
   public
 
   # Mostly used for printout to help the user.
@@ -17,7 +21,7 @@ class Renderer
 
   # Print out selectables with topic.
   def print_select(min_value, keys, name, direction)
-    direction_string = direction === DIRECTION_IN ? 'to convert to' : 'to convert from'
+    direction_string = direction === DIRECTION_IN ? STRING_CONVERT_TO : STRING_CONVERT_FROM
     output("Please select #{name} #{direction_string}. (#{min_value} - #{keys.length})")
     print_keys(keys)
   end
@@ -33,7 +37,7 @@ class Renderer
   end
 
   # Regular output delegation.
-  def print_get_single_value
+  def get_value_to_convert
     output('Enter value to convert')
   end
 
@@ -51,16 +55,17 @@ class Renderer
   end
 
   # Regular error output delegation.
-  def error_smaller_input
+  def error_input_big
     output_error('Selected number too big!')
   end
 
   # Regular error output delegation.
-  def error_bigger_input
+  def error_input_small
     output_error('Selected number too small!')
   end
 
   # Regular output delegation.
+  # Switch output in cse second dimension ist giver or not.
   def error_transfer_dimension(first_dimension, second_dimension = nil)
     if second_dimension
       output_error("Not able to convert from \"#{first_dimension}\" to \"#{second_dimension}\"!")
@@ -73,36 +78,36 @@ class Renderer
 
   # Looping over all keys and draw them within one frame.
   def print_keys(keys)
-    upper_frame
+    print_upper_border
     i = 0
     keys.each do |dimension|
       i += 1
       output("##{i}: #{dimension}", false, false)
     end
-    lower_frame
+    print_lower_border
   end
 
   # Draw upper frame border.
-  def upper_frame
+  def print_upper_border
     printf("╔%1$s╗\n", '═' * OUTPUT_LENGTH)
   end
 
   # Draw lower frame border.
-  def lower_frame
+  def print_lower_border
     printf("╚%1$s╝\n", '═' * OUTPUT_LENGTH)
   end
 
   # Output with colorizing content red in needed default length.
   def output_error(value)
-    upper_frame
+    print_upper_border
     printf("%1$s \e[31m%2$-#{OUTPUT_LENGTH - 6}s\e[0m %1$5s\n", '║', 'ERROR: ' + value.to_s)
-    lower_frame
+    print_lower_border
   end
 
   # Calculating the default length of output and draw frame + borders if needed.
   def output(value, with_upper_frame = true, with_lower_frame = true)
-    with_upper_frame && upper_frame
+    with_upper_frame && print_upper_border
     printf("%1$s %2$-#{OUTPUT_LENGTH - 6}s %1$5s\n", '║', value.to_s)
-    with_lower_frame && lower_frame
+    with_lower_frame && print_lower_border
   end
 end
