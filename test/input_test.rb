@@ -78,22 +78,27 @@ class InputTest < Test::Unit::TestCase
     assert_nil(@input.get_node_element({'foo' => 'bar'}, Renderer::DIRECTION_IN), 'bar')
   end
 
+  #testing nil when direction is integer
   def test_get_dimension_int
     assert_nil(@input.get_node_element(Hash, 1))
   end
 
+  #testing nil when direction is float
   def test_get_dimension_float
     assert_nil(@input.get_node_element(Hash, 1.0))
   end
 
+  #testing nil when direction is array
   def test_get_dimension_arr
     assert_nil(@input.get_node_element(Hash, []))
   end
 
+  #testing nil when direction is nil
   def test_get_dimension_nil
     assert_nil(@input.get_node_element(Hash, nil))
   end
 
+  #testing success
   def test_get_dimension_success
     assert_nil(@input.get_node_element(Hash, Renderer::DIRECTION_IN))
   end
