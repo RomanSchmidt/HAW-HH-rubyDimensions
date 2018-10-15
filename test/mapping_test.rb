@@ -27,14 +27,14 @@ class MappingTest < Test::Unit::TestCase
 
   # testing is the first_dimension and the second_dimension the same
   def test_get_transfer
-    assert_equal({"constant"=>{"after"=>0, "before"=>0}, "multiplier"=>1}, @mapping.get_transfer('celsius', 'celsius'))
+    assert_equal({Mapping::CONSTANT_KEY => {Mapping::CONSTANT_AFTER_KEY => 0, Mapping::CONSTANT_BEFORE_KEY => 0}, Mapping::MULTIPLIER_KEY => 1}, @mapping.get_transfer('celsius', 'celsius'))
   end
 
   def test_get_transfer_cel_kelv
-    assert_equal({"constant"=>{"after"=>0, "before"=>273.15}, "multiplier"=>1}, @mapping.get_transfer('celsius', 'kelvin'))
+    assert_equal({Mapping::CONSTANT_KEY => {Mapping::CONSTANT_AFTER_KEY => 0, Mapping::CONSTANT_BEFORE_KEY => 273.15}, Mapping::MULTIPLIER_KEY => 1}, @mapping.get_transfer('celsius', 'kelvin'))
   end
 
   def test_get_transfer_nil
-    assert_equal({"constant"=>{"after"=>0, "before"=>0}, "multiplier"=>1}, @mapping.get_transfer(nil , nil))
+    assert_equal({Mapping::CONSTANT_KEY => {Mapping::CONSTANT_AFTER_KEY => 0, Mapping::CONSTANT_BEFORE_KEY => 0}, Mapping::MULTIPLIER_KEY => 1}, @mapping.get_transfer(nil, nil))
   end
 end

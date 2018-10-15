@@ -69,7 +69,7 @@ class InputTest < Test::Unit::TestCase
   end
 
   # testing nil j case of dimension a symbol
-  def test_get_node_element_dimension
+  def test_get_node_elmt_dimension
     assert_nil(@input.get_node_element(:foo, Renderer::DIRECTION_IN))
   end
 
@@ -78,23 +78,23 @@ class InputTest < Test::Unit::TestCase
     assert_nil(@input.get_node_element({'foo' => 'bar'}, Renderer::DIRECTION_IN), 'bar')
   end
 
-  def test_get_dimenson_int
+  def test_get_dimension_int
     assert_nil(@input.get_node_element(Hash, 1))
   end
 
-  def test_get_dimenson_float
+  def test_get_dimension_float
     assert_nil(@input.get_node_element(Hash, 1.0))
   end
 
-  def test_get_dimenson_arr
+  def test_get_dimension_arr
     assert_nil(@input.get_node_element(Hash, []))
   end
 
-  def test_get_dimenson_nil
+  def test_get_dimension_nil
     assert_nil(@input.get_node_element(Hash, nil))
   end
 
-  def test_get_dimenson_success
+  def test_get_dimension_success
     assert_nil(@input.get_node_element(Hash, Renderer::DIRECTION_IN))
   end
 
