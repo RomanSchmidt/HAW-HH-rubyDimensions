@@ -22,14 +22,8 @@ class Input
   # Returns a hash with the name and the chosen node.
   # Recursion in case of false input.
   def get_node_element(node, direction)
-    if node.is_a?(Hash) === false
-      return
-    end
-    if node.fetch(Converter::ELEMENT_KEY, nil) === nil
-      return
-    end
-    if node.fetch(Converter::ELEMENT_KEY, nil) === nil
-      return
+    if node_valid?(node) === false || @renderer.direction_valid?(direction) === false
+      return nil
     end
     node_element = node[Converter::ELEMENT_KEY]
     @renderer.print_select(Input::MIN_VALUE, node_element.keys, node[Converter::NAME_KEY], direction)
@@ -52,6 +46,19 @@ class Input
   end
 
   private
+
+  def node_valid?(node)
+    if node.is_a?(Hash) === false
+      return false
+    end
+    if node.fetch(Converter::ELEMENT_KEY, nil) === nil
+      return false
+    end
+    if node.fetch(Converter::ELEMENT_KEY, nil) === nil
+      return false
+    end
+    true
+  end
 
   # General get float function with a catch block for ctrl + c
   def get_float

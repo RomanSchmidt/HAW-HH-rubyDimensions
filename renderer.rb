@@ -19,6 +19,10 @@ class Renderer
   DIRECTION_IN = :in_direction
   DIRECTION_OUT = :out_direction
 
+  def direction_valid?(direction)
+    Renderer::DIRECTION_IN === direction || Renderer::DIRECTION_OUT
+  end
+
   # Print out selectables with topic.
   def print_select(min_value, keys, name, direction)
     direction_string = direction === DIRECTION_IN ? STRING_CONVERT_TO : STRING_CONVERT_FROM
