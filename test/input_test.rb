@@ -78,6 +78,26 @@ class InputTest < Test::Unit::TestCase
     assert_nil(@input.get_node_element({'foo' => 'bar'}, Renderer::DIRECTION_IN), 'bar')
   end
 
+  def test_get_dimenson_int
+    assert_nil(@input.get_node_element(Hash, 1))
+  end
+
+  def test_get_dimenson_float
+    assert_nil(@input.get_node_element(Hash, 1.0))
+  end
+
+  def test_get_dimenson_arr
+    assert_nil(@input.get_node_element(Hash, []))
+  end
+
+  def test_get_dimenson_nil
+    assert_nil(@input.get_node_element(Hash, nil))
+  end
+
+  def test_get_dimenson_success
+    assert_nil(@input.get_node_element(Hash, Renderer::DIRECTION_IN))
+  end
+
   # make sure get_value is a float
   def test_get_value
     assert_equal(InputMockUp::OUTPUT, @input.get_value_to_convert)
