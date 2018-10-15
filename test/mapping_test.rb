@@ -40,18 +40,22 @@ class MappingTest < Test::Unit::TestCase
     assert_equal({Mapping::CONSTANT_KEY => {Mapping::CONSTANT_AFTER_KEY => 0, Mapping::CONSTANT_BEFORE_KEY => 0}, Mapping::MULTIPLIER_KEY => 1}, @mapping.get_transfer(nil, nil))
   end
 
+  # make sure first value as 0 returns a nil
   def test_get_trans_err_int_f_para
     assert_nil(@mapping.get_transfer(0, 'celsius'))
   end
 
+  # make sure second value as 0 returns a nil
   def test_get_trans_err_int_s_para
     assert_nil(@mapping.get_transfer('celsius', 0))
   end
 
+  # make sure first value as nil returns a nil
   def test_get_trans_err_str_f_para
     assert_nil(@mapping.get_transfer('celsius', nil))
   end
 
+  # make sure second value as nil returns a nil
   def test_get_trans_err_str_s_para
     assert_nil(@mapping.get_transfer(nil, 'celsius'))
   end
