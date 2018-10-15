@@ -34,7 +34,10 @@ class Converter
     second_result = get_dimension(Renderer::DIRECTION_OUT)
     value = @input.get_value_to_convert
 
-    convert(first_result[Mapping::SCALE_KEY], first_result[Mapping::LAST_KEY], second_result[Mapping::SCALE_KEY], second_result[Mapping::LAST_KEY], value)
+    new_value = convert(first_result[Mapping::SCALE_KEY], first_result[Mapping::LAST_KEY], second_result[Mapping::SCALE_KEY], second_result[Mapping::LAST_KEY], value)
+    if nil === new_value
+      exit(1)
+    end
   end
 
   # Get the first value in the default dimension.
@@ -49,6 +52,9 @@ class Converter
     second_default_dimension = get_default(second_scale, second_dimension)
 
     transfer = @mapping.get_transfer(first_default_dimension[NAME_KEY], second_default_dimension[NAME_KEY])
+    if nil === transfer
+      return nil
+    end
     default_converted = transfer_default_dimensions(transfer, default_value)
 
     default_converted * second_default_dimension[Mapping::MULTIPLIER_KEY]
@@ -72,6 +78,9 @@ class Converter
   # Convert the value1 to value2 and print it out
   def convert(first_scale, first_dimension, second_scale, second_dimension, value)
     calculated_value = transform_value(first_scale, first_dimension, second_scale, second_dimension, value)
+    if calculated_value === nil
+      return nil
+    end
     @renderer.print_single_result(first_dimension, value, second_dimension, calculated_value)
   end
 

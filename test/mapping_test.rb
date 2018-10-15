@@ -3,7 +3,9 @@ require 'json'
 require './mapping'
 
 class RendererMockUp
+  def error_transfer_dimension(first_dimension, second_dimension = nil)
 
+  end
 end
 
 class MappingMockUp < Mapping
@@ -36,5 +38,21 @@ class MappingTest < Test::Unit::TestCase
 
   def test_get_transfer_nil
     assert_equal({Mapping::CONSTANT_KEY => {Mapping::CONSTANT_AFTER_KEY => 0, Mapping::CONSTANT_BEFORE_KEY => 0}, Mapping::MULTIPLIER_KEY => 1}, @mapping.get_transfer(nil, nil))
+  end
+
+  def test_get_trans_err_int_f_para
+    assert_nil(@mapping.get_transfer(0, 'celsius'))
+  end
+
+  def test_get_trans_err_int_s_para
+    assert_nil(@mapping.get_transfer('celsius', 0))
+  end
+
+  def test_get_trans_err_str_f_para
+    assert_nil(@mapping.get_transfer('celsius', nil))
+  end
+
+  def test_get_trans_err_str_s_para
+    assert_nil(@mapping.get_transfer(nil, 'celsius'))
   end
 end

@@ -42,12 +42,12 @@ class Mapping
     first_trans_dim = @mapping[Mapping::TRANSFER_CODE_KEY][first_dimension]
     if nil === first_trans_dim
       @renderer.error_transfer_dimension(first_dimension)
-      exit(1)
+      return nil
     end
     transfer = first_trans_dim[second_dimension]
     if nil === transfer
       @renderer.error_transfer_dimension(first_dimension, second_dimension)
-      exit(1)
+      return nil
     end
     transfer
   end
