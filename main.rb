@@ -1,6 +1,6 @@
 require "./converter.rb"
 require "./renderer.rb"
-require "./input.rb"#
+require "./input.rb"
 require "./mapping.rb"
 
 # Author: Roman Schmidt, Daniel Osterholz
