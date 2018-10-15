@@ -3,18 +3,20 @@ require './input'
 require './renderer'
 require './converter'
 
-class ConverterMockUp < Converter
-  first_result = get_dimension(RendererMockUp::DIRECTION_IN)
-end
-  def get_dimension(direction)
-    current_node = {ELEMENT_PROPERTY => @mapping.get_categories, NAME_PROPERTY => 'categories'}
-  end
-end
-
 class RendererMockUp < Renderer
 
   def print_get_single_value
+  end
 
+  def get_value_to_convert
+  end
+end
+
+class ConverterMockUp < Converter
+  #first_result = get_dimension(RendererMockUp::DIRECTION_IN)
+
+  def get_dimension(direction)
+    current_node = {ELEMENT_KEY => @mapping.get_categories, NAME_KEY => 'categories'}
   end
 end
 
@@ -23,7 +25,8 @@ class InputMockUp < Input
   OUTPUT = 1.0
 
   def get_note_element
-    node_element = [ConverterMockUp::ELEMENT_PROPERTY]
+    node_element = [ConverterMockUp::ELEMENT_KEY]
+  end
 
   def get_float
     OUTPUT
@@ -45,36 +48,38 @@ class InputTest < Test::Unit::TestCase
     # Do nothing
   end
 
-  # testing if the note is a Hash
-  def get_node_element_test_hash
-
-  # testing if the note is a integer
-  def get_node_element_test_int
-    @input.get_node_element(ConverterMockUp.new.get_dimension, Renderer::DIRECTION_IN)
+  # testing nil j case of dimension a int
+  def test_get_node_element_int
+    assert_nil(@input.get_node_element(1, Renderer::DIRECTION_IN))
   end
 
-  # testing if the note is a float
-  def get_node_element_test_float
-
+  # testing nil j case of dimension a float
+  def test_get_node_element_float
+    assert_nil(@input.get_node_element(1.0, Renderer::DIRECTION_IN))
   end
 
-  # testing if the note is a array
-  def get_node_element_test_arr
-
+  # testing nil j case of dimension an array
+  def test_get_node_element_arr
+    assert_nil(@input.get_node_element([], Renderer::DIRECTION_IN))
   end
 
-  # testing if the note is nil
-  def get_node_element_test_nil
-
+  # testing nil j case of dimension a nil
+  def test_get_node_element_nil
+    assert_nil(@input.get_node_element(nil, Renderer::DIRECTION_IN))
   end
 
-  # testing if the dimension a symbol
-  def get_node_element_test_dimension
+  # testing nil j case of dimension a symbol
+  def test_get_node_element_dimension
+    assert_nil(@input.get_node_element(:foo, Renderer::DIRECTION_IN))
+  end
 
+  # testing success
+  def test_get_node_element_success
+    assert_nil(@input.get_node_element({'foo' => 'bar'}, Renderer::DIRECTION_IN), 'bar')
   end
 
   # make sure get_value is a float
   def test_get_value
-    assert_equal(RendererMockUp::OUTPUT, @input.get_value)
+    assert_equal(InputMockUp::OUTPUT, @input.get_value_to_convert)
   end
 end
