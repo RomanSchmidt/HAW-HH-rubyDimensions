@@ -43,7 +43,7 @@ class Converter
   # Multiply the second dimension by its own multiplier to get from default to the target dimension within the second
   # scale
   def transform_value(first_scale, first_dimension, second_scale, second_dimension, value)
-    default_value = value_to_default(first_scale, first_dimension)
+    default_value = value_to_default(value, first_scale, first_dimension)
 
     first_default_dimension = get_default(first_scale, first_dimension)
     second_default_dimension = get_default(second_scale, second_dimension)
@@ -65,7 +65,7 @@ class Converter
   end
 
   # Divide the value by its own multiplier from the first scale to get the value in the default dimension.
-  def value_to_default(first_scale, first_dimension)
+  def value_to_default(value, first_scale, first_dimension)
     value / first_scale[ELEMENT_KEY][first_dimension][Mapping::MULTIPLIER_KEY]
   end
 
