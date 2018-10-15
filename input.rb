@@ -22,6 +22,9 @@ class Input
   # Print the current selectables and get + check the input to return one.
   # Returns a hash with the name and the chosen node.
   def get_node_element(node, direction)
+    if node.is_a? === false
+      return nil
+    end
     node_element = node[Converter::ELEMENT_PROPERTY]
     @renderer.print_select(MIN_VALUE, node_element.keys, node[Converter::NAME_PROPERTY], direction)
     begin
