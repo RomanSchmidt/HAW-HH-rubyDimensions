@@ -1,6 +1,15 @@
 require 'test/unit'
 require './input'
 require './renderer'
+require './converter'
+
+class ConverterMockUp < Converter
+  first_result = get_dimension(RendererMockUp::DIRECTION_IN)
+end
+  def get_dimension(direction)
+    current_node = {ELEMENT_PROPERTY => @mapping.get_categories, NAME_PROPERTY => 'categories'}
+  end
+end
 
 class RendererMockUp < Renderer
 
@@ -14,7 +23,7 @@ class InputMockUp < Input
   OUTPUT = 1.0
 
   def get_note_element
-    node_element = [Converter::ELEMENT_PROPERTY]
+    node_element = [ConverterMockUp::ELEMENT_PROPERTY]
 
   def get_float
     OUTPUT
@@ -64,7 +73,7 @@ class InputTest < Test::Unit::TestCase
 
   end
 
-  # make sure its a float
+  # make sure get_value is a float
   def test_get_value
     assert_equal(RendererMockUp::OUTPUT, @input.get_value)
   end
